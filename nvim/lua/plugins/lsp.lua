@@ -5,12 +5,10 @@ return {
 
     config = function()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
-      local lspconfig = require('lspconfig')
-
-      lspconfig['clangd'].setup({ capabilities = capabilities })
-      lspconfig['pyright'].setup({ capabilities = capabilities })
-      lspconfig['rust_analyzer'].setup({ capabilities = capabilities })
-      lspconfig['cmake'].setup({ capabilities = capabilities })
+      vim.lsp.enable('clangd', { capabilities = capabilities })
+      vim.lsp.enable('pyright', { capabilities = capabilities })
+      vim.lsp.enable('rust_analyzer', { capabilities = capabilities })
+      vim.lsp.enable('cmake', { capabilities = capabilities })
     end,
   },
 
