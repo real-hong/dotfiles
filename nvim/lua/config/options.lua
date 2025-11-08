@@ -17,7 +17,7 @@ vim.o.clipboard = 'unnamedplus'
 vim.o.completeopt = 'menuone,noselect'
 
 vim.o.encoding = 'utf-8'
-vim.o.fileencoding = 'utf-8'
+-- vim.o.fileencoding = 'utf-8'
 
 vim.o.hlsearch = true
 vim.o.incsearch = true
