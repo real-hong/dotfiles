@@ -25,6 +25,8 @@ return {
           'json',
           'toml',
           'yaml',
+          'vim',
+          'vimdoc',
         },
         sync_install = false,
         highlight = { enable = true },
