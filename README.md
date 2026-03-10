@@ -6,9 +6,9 @@ My development configurations
 
 * Terminal: [kitty](https://sw.kovidgoyal.net/kitty) [alacritty](https://alacritty.org)
 * Terminal Multiplexer: [tmux](https://github.com/tmux/tmux)
-* Proxy: [v2ray](https://github.com/v2fly/v2ray-core) [proxychains-ng](https://github.com/rofl0r/proxychains-ng)
+* Proxy: [xray](https://github.com/XTLS/Xray-core) [v2ray](https://github.com/v2fly/v2ray-core) [proxychains-ng](https://github.com/rofl0r/proxychains-ng)
 * Editor: [neovim](http://neovim.org)
-* Shell: [fish](https://fishshell.com) [zsh](https://www.zsh.org) [ohmyzsh](https://ohmyz.sh)
+* Shell: [fish](https://fishshell.com)
 * Debug: [cgdb](https://cgdb.github.io) [GEF](https://github.com/hugsy/gef)
 * File Manager: [yazi](https://github.com/sxyazi/yazi)
 * Shell Prompt: [starship](https://github.com/starship/starship)
