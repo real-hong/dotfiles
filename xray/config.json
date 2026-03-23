@@ -1,0 +1,100 @@
+{
+    "log": {
+        "loglevel": "warning"
+    },
+    "inbounds": [
+        {
+            "port": 10808,
+            "listen": "127.0.0.1",
+            "protocol": "socks",
+            "settings": {
+                "udp": true
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "tag": "proxy",
+            "protocol": "vless",
+            "settings": {
+                "vnext": [
+                    {
+                        "address": "00.00.00.00",
+                        "port": 443,
+                        "users": [
+                            {
+                                "id": "00000000-0000-0000-0000-000000000000",
+                                "flow": "xtls-rprx-vision",
+                                "encryption": "none"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,
+                    "fingerprint": "chrome",
+                    "serverName": "www.apple.com",
+                    "password": "0000000000000000000000000000000000000000000",
+                    "shortId": "0000000000000000",
+                    "mldsa65Verify": "",
+                    "spiderX": ""
+                }
+            }
+        },
+        {
+            "tag": "direct",
+            "protocol": "freedom",
+            "settings": {
+                "domainStrategy": "UseIP"
+            }
+        },
+        {
+            "tag": "block",
+            "protocol": "blackhole",
+            "settings": {
+                "response": {
+                    "type": "http"
+                }
+            }
+        }
+    ],
+    "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+            {
+                "type": "field",
+                "domain": ["geosite:category-ads-all"],
+                "outboundTag": "block"
+            },
+            {
+                "type": "field",
+                "domain": [
+                    "geosite:openai",
+                    "geosite:anthropic",
+                    "domain:chatgpt.com",
+                    "domain:claude.ai"
+                ],
+                "outboundTag": "proxy"
+            },
+            {
+                "type": "field",
+                "domain": ["geosite:cn"],
+                "outboundTag": "direct"
+            },
+            {
+                "type": "field",
+                "ip": ["geoip:cn", "geoip:private"],
+                "outboundTag": "direct"
+            },
+            {
+                "type": "field",
+                "network": "tcp,udp",
+                "outboundTag": "proxy"
+            }
+        ]
+    }
+}
