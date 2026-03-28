@@ -1,62 +1,83 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
+    lazy = false,
     build = ':TSUpdate',
     config = function()
-      local configs = require('nvim-treesitter.configs')
+      local ts = require('nvim-treesitter')
 
-      configs.setup({
-        ensure_installed = {
-          'c',
-          'cpp',
-          'rust',
-          'python',
-          'lua',
-          'go',
-          'bash',
-          'make',
-          'cmake',
-          'verilog',
-          'markdown',
-          'markdown_inline',
-          'gitignore',
-          'gitcommit',
-          'diff',
-          'json',
-          'toml',
-          'yaml',
-          'vim',
-          'vimdoc',
-        },
-        sync_install = false,
-        highlight = { enable = true },
-        indent = { enable = true },
+      local parsers = {
+        'c',
+        'cpp',
+        'rust',
+        'python',
+        'lua',
+        'go',
+        'bash',
+        'make',
+        'cmake',
+        'verilog',
+        'markdown',
+        'markdown_inline',
+        'gitignore',
+        'gitcommit',
+        'diff',
+        'json',
+        'toml',
+        'yaml',
+        'vim',
+        'vimdoc',
+      }
+
+      ts.setup({})
+      ts.install(parsers)
+
+      local group = vim.api.nvim_create_augroup('UserTreesitterMain', { clear = true })
+
+      vim.api.nvim_create_autocmd('FileType', {
+        group = group,
+        pattern = parsers,
+        callback = function(args)
+          pcall(vim.treesitter.start, args.buf)
+          pcall(function()
+            vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end)
+        end,
       })
     end,
   },
 
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
-    dependencies = 'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+    },
+    lazy = false,
+    config = function()
+      require('nvim-treesitter-textobjects').setup({})
+    end,
   },
 
   {
     'nvim-treesitter/nvim-treesitter-context',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+    },
     config = function()
       require('treesitter-context').setup({
-        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-        multiwindow = false, -- Enable multiwindow support.
-        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-        min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+        enable = true,
+        multiwindow = false,
+        max_lines = 0,
+        min_window_height = 0,
         line_numbers = true,
-        multiline_threshold = 20, -- Maximum number of lines to show for a single context
-        trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-        mode = 'cursor', -- Line used to calculate context. Choices: 'cursor', 'topline'
-        -- Separator between context and content. Should be a single character string, like '-'.
-        -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+        multiline_threshold = 20,
+        trim_scope = 'outer',
+        mode = 'cursor',
         separator = nil,
-        zindex = 20, -- The Z-index of the context window
-        on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+        zindex = 20,
+        on_attach = nil,
       })
     end,
   },
