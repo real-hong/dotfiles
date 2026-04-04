@@ -17,7 +17,7 @@ return {
         'bash',
         'make',
         'cmake',
-        'verilog',
+        'systemverilog',
         'markdown',
         'markdown_inline',
         'gitignore',

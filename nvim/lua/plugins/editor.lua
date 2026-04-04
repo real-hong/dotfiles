@@ -236,4 +236,10 @@ return {
     -- use opts = {} for passing setup options
     -- this is equivalent to setup({}) function
   },
+
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    opts = {},
+  },
 }
