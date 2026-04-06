@@ -6,7 +6,8 @@ return {
     config = function()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
       vim.lsp.enable('clangd', { capabilities = capabilities })
-      vim.lsp.enable('pyright', { capabilities = capabilities })
+      vim.lsp.enable('ty', { capabilities = capabilities })
+      vim.lsp.enable('ruff', { capabilities = capabilities })
       vim.lsp.enable('rust_analyzer', { capabilities = capabilities })
       vim.lsp.enable('cmake', { capabilities = capabilities })
     end,
@@ -116,7 +117,7 @@ return {
         c = { 'clang-format' },
         cpp = { 'clang-format' },
         lua = { 'stylua' },
-        python = { 'yapf' },
+        python = { 'ruff_format' },
         rust = { 'rustfmt', lsp_format = 'fallback' },
         ['*'] = { 'trim_whitespace' },
       },
