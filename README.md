@@ -16,6 +16,9 @@ My development configurations
 * PDF Reader: [Zathura](https://pwmt.org/projects/zathura)
 * HW Monitor: [Glances](https://github.com/nicolargo/glances)
 * Bootable USB: [Ventoy](https://github.com/ventoy/Ventoy)
+* Python Package Manager: [uv](https://docs.astral.sh/uv)
+* Python Linter and Formatter: [Ruff](https://docs.astral.sh/ruff)
+* Python Type Checker and Language Server: [ty](https://docs.astral.sh/ty)
 * Modern Unix
   * grep: [ripgrep](https://github.com/BurntSushi/ripgrep)
   * ls: [exa](https://github.com/ogham/exa)
