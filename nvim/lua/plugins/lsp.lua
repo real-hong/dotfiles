@@ -111,24 +111,39 @@ return {
 
   {
     'stevearc/conform.nvim',
-    cmd = 'ConformInfo',
+    cmd = { 'ConformInfo' },
+    keys = {
+      {
+        '<A-f>',
+        function()
+          require('conform').format({
+            async = true, -- If true the method won't block. Defaults to false. If the buffer is modified before the formatter completes, the formatting will be discarded.
+            lsp_format = 'never', -- never use the LSP for formatting (default)
+          })
+        end,
+        mode = { 'n', 'x' },
+        desc = 'Format code',
+      },
+    },
     opts = {
+      notify_on_error = true,
+      notify_no_formatters = false,
+
+      log_level = vim.log.levels.ERROR,
+
       formatters_by_ft = {
         c = { 'clang-format' },
         cpp = { 'clang-format' },
+        python = { 'ruff_organize_imports', 'ruff_format' },
         lua = { 'stylua' },
-        python = { 'ruff_format' },
-        rust = { 'rustfmt', lsp_format = 'fallback' },
-        ['*'] = { 'trim_whitespace' },
-      },
-    },
-    keys = {
-      {
-        '<M-f>',
-        function()
-          require('conform').format()
-        end,
-        mode = { 'n', 'v' },
+        rust = { 'rustfmt' },
+
+        sh = { 'shfmt' },
+        bash = { 'shfmt' },
+        zsh = { 'shfmt' },
+        fish = { 'fish_indent' },
+
+        cmake = { 'cmake_format' },
       },
     },
   },

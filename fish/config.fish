@@ -13,6 +13,9 @@ alias ls=exa
 alias ll="exa -lgH"
 alias grep="grep -E --color=auto"
 
+alias run-codex="HTTP_PROXY=http://127.0.0.1:10808 HTTPS_PROXY=http://127.0.0.1:10808 codex"
+alias run-claude="HTTP_PROXY=http://127.0.0.1:10808 HTTPS_PROXY=http://127.0.0.1:10808 claude"
+
 function is_ubuntu
   test -r /etc/os-release; or return 1
   set -l os_id (sh -c '. /etc/os-release && printf "%s" "$ID"')
