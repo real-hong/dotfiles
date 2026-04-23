@@ -146,12 +146,13 @@ This is aligned with current Neovim documentation and should remain the preferre
 
 The current config tracks `nvim-treesitter` `main` while Neovim is currently `0.11.6`.
 
-That is only reasonable if the Neovim version strategy also moves toward the newer upstream expectations. Otherwise the Treesitter branch choice should be adjusted to match the active Neovim version more conservatively.
+That is only reasonable if the Neovim version strategy also moves toward the newer upstream expectations. The current expectation is that Neovim will likely move to `0.12.x` within a few months, so the cleanup should avoid unnecessary churn while still keeping the current setup usable in the interim.
 
 Design rule:
 
-- if staying on Neovim `0.11.x`, switch to a Treesitter strategy compatible with that line as part of the cleanup
-- if moving to Neovim `0.12/nightly`, keeping the newer Treesitter direction is acceptable
+- while Neovim is still on `0.11.x`, prefer the least disruptive Treesitter setup that keeps the editor stable
+- once Neovim moves to `0.12.x`, keep or complete the transition to the newer Treesitter direction
+- do not spend implementation effort on a large temporary Treesitter reshuffle if that work would be thrown away by the near-term `0.12.x` upgrade
 
 ## Non-Goals
 
