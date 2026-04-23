@@ -1,3 +1,150 @@
+local function explorer_file_hl(item)
+  local function has(prop)
+    local node = item
+    while node do
+      if node[prop] then
+        return true
+      end
+      node = node.parent
+    end
+    return false
+  end
+
+  if has('ignored') then
+    return 'SnacksPickerPathIgnored'
+  end
+  if item.filename_hl then
+    return item.filename_hl
+  end
+  if has('hidden') then
+    return 'SnacksPickerPathHidden'
+  end
+  return item.dir and 'SnacksPickerDirectory' or 'SnacksPickerFile'
+end
+
+local function explorer_git_badge(item)
+  if not item.status then
+    return nil
+  end
+
+  local status = require('snacks.picker.source.git').git_status(item.status)
+  if status.status == 'ignored' then
+    return nil
+  end
+
+  local key = status.unmerged and 'unmerged' or status.status
+  local icon = ({
+    added = '+',
+    copied = '~',
+    deleted = '-',
+    modified = '~',
+    renamed = '~',
+    unmerged = '-',
+    untracked = '?',
+  })[key]
+  local hl = ({
+    added = 'SnacksPickerGitStatusAdded',
+    copied = 'SnacksPickerGitStatusCopied',
+    deleted = 'SnacksPickerGitStatusDeleted',
+    modified = 'SnacksPickerGitStatusModified',
+    renamed = 'SnacksPickerGitStatusRenamed',
+    unmerged = 'SnacksPickerGitStatusUnmerged',
+    untracked = 'SnacksPickerGitStatusUntracked',
+  })[key] or 'SnacksPickerGitStatus'
+
+  if status.staged then
+    icon = '+'
+    hl = 'SnacksPickerGitStatusStaged'
+  end
+
+  return icon and { icon, hl } or nil
+end
+
+local function explorer_diagnostic_badge(item)
+  local severity = item.severity
+  severity = type(severity) == 'number' and vim.diagnostic.severity[severity] or severity
+  if type(severity) ~= 'string' then
+    return nil
+  end
+
+  local name = severity:sub(1, 1):upper() .. severity:sub(2):lower()
+  local icon = ({
+    Error = 'E',
+    Warn = 'W',
+    Info = 'I',
+    Hint = 'H',
+  })[name]
+  return icon and { icon, 'Diagnostic' .. name } or nil
+end
+
+local function explorer_width(chunks)
+  local width = 0
+  for _, chunk in ipairs(chunks) do
+    if type(chunk[1]) == 'string' then
+      width = width + vim.api.nvim_strwidth(chunk[1])
+    end
+  end
+  return width
+end
+
+local function explorer_status_chunks(item, picker, content_width)
+  local git = explorer_git_badge(item)
+  local diagnostic = explorer_diagnostic_badge(item)
+  if not git and not diagnostic then
+    return nil
+  end
+  if not git then
+    return { diagnostic }
+  end
+  if not diagnostic then
+    return { git }
+  end
+
+  local combined = {
+    git,
+    { ' ' },
+    diagnostic,
+  }
+
+  local list_win = picker.list and picker.list.win
+  if not (list_win and list_win:valid()) then
+    return combined
+  end
+
+  local win_width = vim.api.nvim_win_get_width(list_win.win)
+  if content_width + explorer_width(combined) <= win_width then
+    return combined
+  end
+  return { diagnostic }
+end
+
+local function explorer_format(item, picker)
+  local ret = {} ---@type snacks.picker.Highlight[]
+
+  if item.parent then
+    vim.list_extend(ret, require('snacks.picker.format').tree(item, picker))
+  end
+
+  if item.dir then
+    ret[#ret + 1] = { item.open and '-' or '+', 'SnacksPickerTree' }
+    ret[#ret + 1] = { ' ' }
+  end
+
+  ret[#ret + 1] = { item.name, explorer_file_hl(item), field = 'file' }
+
+  local status = explorer_status_chunks(item, picker, explorer_width(ret))
+  if status then
+    ret[#ret + 1] = {
+      col = 0,
+      virt_text = status,
+      virt_text_pos = 'right_align',
+      hl_mode = 'combine',
+    }
+  end
+
+  return ret
+end
+
 return {
   {
     'kylechui/nvim-surround',
@@ -21,43 +168,7 @@ return {
       picker = {
         sources = {
           explorer = {
-            formatters = {
-              file = {
-                filename_only = true,
-                git_status_hl = false,
-                icon_width = 2,
-              },
-              severity = {
-                icons = true,
-                level = false,
-                pos = 'right',
-              },
-            },
-            icons = {
-              files = {
-                enabled = true,
-                dir = '▸ ',
-                dir_open = '▾ ',
-                file = '  ',
-              },
-              git = {
-                enabled = true,
-                staged = '+',
-                added = '+',
-                modified = '~',
-                deleted = '-',
-                renamed = '~',
-                copied = '~',
-                unmerged = '-',
-                untracked = '?',
-              },
-              diagnostics = {
-                Error = 'E ',
-                Warn = 'W ',
-                Info = 'I ',
-                Hint = 'H ',
-              },
-            },
+            format = explorer_format,
           },
         },
       },
