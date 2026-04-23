@@ -9,7 +9,7 @@ vim.o.laststatus = 2
 vim.o.showtabline = 2
 vim.o.cursorline = true
 vim.o.pumheight = 20
-vim.o.showmode = true
+vim.o.showmode = false
 vim.o.colorcolumn = '100'
 vim.o.wrap = true
 

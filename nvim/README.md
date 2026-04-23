@@ -15,7 +15,6 @@ This is my Neovim configurations
 * Plugin Manager: [lazy.nvim](https://github.com/folke/lazy.nvim)
 * LSP:
   * LSP Configurations: [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
-  * LSP Progress: [fidget.nvim](https://github.com/j-hui/fidget.nvim)
   * Diagnostics:
     * Diagnostics: [trouble.nvim](https://github.com/folke/trouble.nvim)
 * Completion: [blink.cmp](https://github.com/Saghen/blink.cmp)
