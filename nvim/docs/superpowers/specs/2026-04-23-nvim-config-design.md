@@ -65,6 +65,11 @@ This means:
 
 - replace `nvim-tree` with `Snacks.explorer`
 
+Implementation rule:
+
+- keep the existing `<M-e>` explorer entrypoint, but remap it from `NvimTreeToggle` to `Snacks.explorer`
+- enable `Snacks.explorer` with `replace_netrw = true` so directory opening is handled by the same navigation stack
+
 ## Interaction Model
 
 ### File Navigation
@@ -121,6 +126,14 @@ In practice this means the implementation should reduce or remove overlap betwee
 - builtin tabline visibility and bufferline
 - any statusline options that recreate information already shown elsewhere
 
+Concrete decisions:
+
+- set builtin `showmode` off
+- set builtin `showtabline` off
+- keep `lualine` as the only statusline
+- keep `bufferline` as the only persistent buffer strip
+- do not use lualine's tabline feature as a second tab/buffer surface
+
 ## Version Strategy
 
 ### LSP
@@ -137,7 +150,7 @@ That is only reasonable if the Neovim version strategy also moves toward the new
 
 Design rule:
 
-- if staying on Neovim `0.11.x`, use a Treesitter strategy compatible with that line
+- if staying on Neovim `0.11.x`, switch to a Treesitter strategy compatible with that line as part of the cleanup
 - if moving to Neovim `0.12/nightly`, keeping the newer Treesitter direction is acceptable
 
 ## Non-Goals
