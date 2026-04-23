@@ -62,6 +62,7 @@ Concrete implementation target:
 - implement the visual overrides in `lua/plugins/editor.lua`
 - apply them through the `picker.sources.explorer` configuration path
 - customize explorer row rendering enough to remove file icons completely, instead of only changing fallback icon values
+- use an explicit row-render / format override for explorer entries instead of relying only on `icons.files`
 
 ## Concrete Character Set
 
@@ -85,6 +86,13 @@ Concrete implementation target:
 - deleted: `-`
 - untracked: `?`
 
+Extended git mapping:
+
+- renamed: `~`
+- copied: `~`
+- unmerged: `-`
+- ignored: hidden
+
 Git precedence rule:
 
 - when more than one git state applies, prefer `-` over `~` over `+` over `?`
@@ -95,6 +103,13 @@ Git precedence rule:
 - warning: `W`
 - info: `I`
 - hint: `H`
+
+### Right-Side Status Layout
+
+- show git status first
+- show diagnostics after git status
+- keep one space between them
+- if space is too tight, preserve diagnostics and drop git first
 
 ## Design Rules
 
