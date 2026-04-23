@@ -81,6 +81,20 @@ return {
           tab_size = 18,
           diagnostics = 'nvim_lsp',
           diagnostics_update_in_insert = false,
+          highlights = {
+            separator = {
+              fg = '#3b4252',
+              bg = '#242b38',
+            },
+            separator_visible = {
+              fg = '#4c566a',
+              bg = '#2b3445',
+            },
+            separator_selected = {
+              fg = '#81a1c1',
+              bg = '#1f2633',
+            },
+          },
           color_icons = false,
           show_buffer_icons = false,
           show_buffer_close_icons = false,
@@ -88,7 +102,7 @@ return {
           show_tab_indicators = true,
           show_duplicate_prefix = true,
           persist_buffer_sort = true,
-          separator_style = { '|', '|' },
+          separator_style = 'thick',
           enforce_regular_tabs = false,
           always_show_bufferline = true,
           hover = {
