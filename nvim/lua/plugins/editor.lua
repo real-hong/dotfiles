@@ -20,7 +20,45 @@ return {
       },
       picker = {
         sources = {
-          explorer = {},
+          explorer = {
+            formatters = {
+              file = {
+                filename_only = true,
+                git_status_hl = false,
+                icon_width = 2,
+              },
+              severity = {
+                icons = true,
+                level = false,
+                pos = 'right',
+              },
+            },
+            icons = {
+              files = {
+                enabled = true,
+                dir = '▸ ',
+                dir_open = '▾ ',
+                file = '  ',
+              },
+              git = {
+                enabled = true,
+                staged = '+',
+                added = '+',
+                modified = '~',
+                deleted = '-',
+                renamed = '~',
+                copied = '~',
+                unmerged = '-',
+                untracked = '?',
+              },
+              diagnostics = {
+                Error = 'E ',
+                Warn = 'W ',
+                Info = 'I ',
+                Hint = 'H ',
+              },
+            },
+          },
         },
       },
     },
