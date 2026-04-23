@@ -57,6 +57,11 @@ The implementation should:
 - keep git state markers with compact ASCII-like symbols
 - simplify diagnostics to a single low-noise character
 
+Concrete implementation target:
+
+- implement the visual overrides in `lua/plugins/editor.lua`
+- apply them through the `picker.sources.explorer` configuration path
+
 ## Concrete Character Set
 
 ### Tree Structure
@@ -76,9 +81,16 @@ The implementation should:
 - deleted: `-`
 - untracked: `?`
 
+Git precedence rule:
+
+- when more than one git state applies, prefer `-` over `~` over `+` over `?`
+
 ### Diagnostics
 
-- diagnostic marker: `!`
+- error: `E`
+- warning: `W`
+- info: `I`
+- hint: `H`
 
 ## Design Rules
 
