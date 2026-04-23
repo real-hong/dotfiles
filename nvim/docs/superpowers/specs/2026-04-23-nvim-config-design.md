@@ -69,6 +69,7 @@ Implementation rule:
 
 - keep the existing `<M-e>` explorer entrypoint, but remap it from `NvimTreeToggle` to `Snacks.explorer`
 - enable `Snacks.explorer` with `replace_netrw = true` so directory opening is handled by the same navigation stack
+- ensure the relevant `snacks.nvim` explorer functionality is available at startup, so directory opening does not depend on a key-triggered lazy load
 
 ## Interaction Model
 
@@ -129,10 +130,11 @@ In practice this means the implementation should reduce or remove overlap betwee
 Concrete decisions:
 
 - set builtin `showmode` off
-- set builtin `showtabline` off
+- keep builtin `showtabline` on so `bufferline` remains visible
 - keep `lualine` as the only statusline
-- keep `bufferline` as the only persistent buffer strip
+- keep `bufferline` as the only persistent tabline/buffer strip
 - do not use lualine's tabline feature as a second tab/buffer surface
+- remove any `bufferline` offsets or special handling that still assume `NvimTree`
 
 ## Version Strategy
 
@@ -153,6 +155,12 @@ Design rule:
 - while Neovim is still on `0.11.x`, prefer the least disruptive Treesitter setup that keeps the editor stable
 - once Neovim moves to `0.12.x`, keep or complete the transition to the newer Treesitter direction
 - do not spend implementation effort on a large temporary Treesitter reshuffle if that work would be thrown away by the near-term `0.12.x` upgrade
+
+Concrete implementation stance for now:
+
+- do not force a large Treesitter branch migration as part of this cleanup unless the current setup is causing an active breakage
+- if the current Treesitter `main` setup remains usable on the local `0.11.x` environment, leave it in place for now
+- revisit Treesitter branch and setup choices after the Neovim `0.12.x` upgrade
 
 ## Non-Goals
 
