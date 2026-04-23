@@ -23,8 +23,7 @@ This is my Neovim configurations
   * nvim-treesitter: [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
   * nvim-treesitter-textobjects: [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)
   * nvim-surround: [nvim-surround](https://github.com/kylechui/nvim-surround)
-* Fuzzy Finder: [snacks.picker](https://github.com/folke/snacks.nvim/blob/main/docs/picker.md)
-* File Explorer: [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua)
+* Fuzzy Finder and File Explorer: [snacks.nvim](https://github.com/folke/snacks.nvim)
 * Bars and Lines:
   * Statusline: [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)
   * Tabline: [bufferline.nvim](https://github.com/akinsho/bufferline.nvim)
@@ -42,7 +41,7 @@ This is my Neovim configurations
 
 | Key         | Action                                    |
 | ----------- | ----------------------------------------- |
-| Meta + e    | Toggle file explorer                      |
+| Meta + e    | Toggle Snacks explorer                    |
 | Meta + f    | Format code                               |
 | Meta + n    | Goto next tab                             |
 | Meta + p    | Goto previous tab                         |

@@ -12,12 +12,16 @@ return {
 
   {
     'folke/snacks.nvim',
+    lazy = false,
     ---@type snacks.Config
     opts = {
+      explorer = {
+        replace_netrw = true,
+      },
       picker = {
-        -- your picker configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
+        sources = {
+          explorer = {},
+        },
       },
     },
     keys = {
@@ -44,18 +48,6 @@ return {
         desc = 'Grep',
       },
     },
-  },
-
-  {
-    'nvim-tree/nvim-tree.lua',
-    version = '*',
-    lazy = false,
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-    },
-    config = function()
-      require('nvim-tree').setup({})
-    end,
   },
 
   {

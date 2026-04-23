@@ -15,5 +15,7 @@ map('n', '<M-7>', '<CMD>BufferLineGoToBuffer 7<CR>')
 map('n', '<M-8>', '<CMD>BufferLineGoToBuffer 8<CR>')
 map('n', '<M-9>', '<CMD>BufferLineGoToBuffer 9<CR>')
 
--- nvimtree
-map('n', '<M-e>', '<CMD>NvimTreeToggle<CR>')
+-- explorer
+map('n', '<M-e>', function()
+  Snacks.explorer()
+end)
