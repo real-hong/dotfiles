@@ -55,6 +55,12 @@ The implementation should:
 - improve separation for both active and inactive neighboring buffers
 - preserve the restrained aesthetic of the existing setup
 
+Concrete decisions:
+
+- set `separator_style = 'thick'`
+- do not use `slant`, `slope`, or a custom separator pair
+- limit highlight overrides to separator-specific groups only
+
 ## Design Rules
 
 ### Separator Shape
@@ -77,6 +83,15 @@ The emphasis belongs on:
 - the edge around the active buffer
 
 The emphasis should not come from making every buffer background dramatically darker or brighter.
+
+Concrete highlight scope:
+
+- override only `separator`
+- override only `separator_visible`
+- override only `separator_selected`
+- do not override `background`
+- do not override `buffer_visible`
+- do not override `buffer_selected`
 
 ## Expected Result
 
