@@ -61,18 +61,22 @@ Concrete implementation target:
 
 - implement the visual overrides in `lua/plugins/editor.lua`
 - apply them through the `picker.sources.explorer` configuration path
+- customize explorer row rendering enough to remove file icons completely, instead of only changing fallback icon values
 
 ## Concrete Character Set
 
 ### Tree Structure
 
-- expanded directory: `▾`
-- collapsed directory: `▸`
+- expanded directory: `-`
+- collapsed directory: `+`
 
 ### File And Folder Presentation
 
 - no file type icon
 - no folder icon
+- no empty placeholder icon column for files
+- directories should show only `+` or `-` plus the directory name
+- regular files should show only the filename
 
 ### Git State
 
@@ -105,6 +109,7 @@ Git precedence rule:
 - colorful filetype glyphs
 - decorative folder glyphs
 - multi-shape diagnostic icons
+- fake empty icon spacing for regular files
 
 ### Aesthetic Constraint
 
@@ -125,6 +130,8 @@ After implementation:
 
 - the explorer should look calmer and less distracting
 - file and folder entries should be distinguished mostly by structure and naming, not icons
+- directories should read as `+ name` or `- name`
+- regular files should read as plain filenames
 - git changes should still be scannable
 - diagnostics should remain noticeable without drawing too much attention
 
