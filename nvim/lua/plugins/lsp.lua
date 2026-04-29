@@ -1,3 +1,70 @@
+local diagnostic_config = {
+  underline = true,
+  virtual_text = false,
+  virtual_lines = false,
+  signs = true,
+  update_in_insert = false,
+  severity_sort = false,
+}
+
+local server_configs = {
+  clangd = {},
+  ty = {
+    settings = {
+      ty = {
+        disableLanguageServices = false,
+        diagnosticMode = 'openFilesOnly',
+        showSyntaxErrors = true,
+        inlayHints = {
+          variableTypes = true,
+          callArgumentNames = true,
+        },
+        completions = {
+          autoImport = true,
+        },
+      },
+    },
+  },
+  ruff = {
+    init_options = {
+      settings = {
+        logLevel = 'error',
+      },
+    },
+  },
+  rust_analyzer = {
+    settings = {
+      ['rust-analyzer'] = {
+        cargo = {
+          features = 'all',
+          targetDir = true,
+        },
+        check = {
+          command = 'clippy',
+          allTargets = true,
+        },
+      },
+    },
+  },
+}
+
+local server_order = {
+  'clangd',
+  'ty',
+  'ruff',
+  'rust_analyzer',
+}
+
+local function disable_ruff_hover(args)
+  local client = vim.lsp.get_client_by_id(args.data.client_id)
+  if client == nil then
+    return
+  end
+  if client.name == 'ruff' then
+    client.server_capabilities.hoverProvider = false
+  end
+end
+
 return {
   {
     'neovim/nvim-lspconfig',
@@ -5,84 +72,23 @@ return {
     config = function()
       local blink = require('blink.cmp')
 
-      -- https://neovim.io/doc/user/diagnostic/
-      vim.diagnostic.config({
-        underline = true,
-        virtual_text = false,
-        virtual_lines = false,
-        signs = true,
-        update_in_insert = false,
-        severity_sort = false,
-      })
+      vim.diagnostic.config(diagnostic_config)
 
       vim.lsp.config('*', {
         capabilities = blink.get_lsp_capabilities(),
       })
 
-      vim.lsp.config('clangd', {})
+      for server, opts in pairs(server_configs) do
+        vim.lsp.config(server, opts)
+      end
 
-      -- https://docs.astral.sh/ty/reference/editor-settings/
-      vim.lsp.config('ty', {
-        settings = {
-          ty = {
-            disableLanguageServices = false,
-            diagnosticMode = 'openFilesOnly',
-            showSyntaxErrors = true,
-            inlayHints = {
-              variableTypes = true,
-              callArgumentNames = true,
-            },
-            completions = {
-              autoImport = true,
-            },
-          },
-        },
-      })
-
-      -- https://docs.astral.sh/ruff/editors/setup/#neovim
-      vim.lsp.config('ruff', {
-        init_options = {
-          settings = {
-            logLevel = 'error',
-          },
-        },
-      })
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
-        callback = function(args)
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          if client == nil then
-            return
-          end
-          if client.name == 'ruff' then
-            client.server_capabilities.hoverProvider = false
-          end
-        end,
+        callback = disable_ruff_hover,
         desc = 'LSP: Disable hover capability from Ruff',
       })
 
-      -- https://rust-analyzer.github.io/book/configuration.html
-      vim.lsp.config('rust_analyzer', {
-        settings = {
-          ['rust-analyzer'] = {
-            cargo = {
-              features = 'all',
-              targetDir = true,
-            },
-            check = {
-              command = 'clippy',
-              allTargets = true,
-            },
-          },
-        },
-      })
-
-      for _, server in ipairs({
-        'clangd',
-        'ty',
-        'ruff',
-        'rust_analyzer',
-      }) do
+      for _, server in ipairs(server_order) do
         vim.lsp.enable(server)
       end
     end,
