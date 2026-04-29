@@ -1,3 +1,4 @@
+-- https://neovim.io/doc/user/diagnostic/
 local diagnostic_config = {
   underline = true,
   virtual_text = false,
@@ -9,6 +10,8 @@ local diagnostic_config = {
 
 local server_configs = {
   clangd = {},
+
+  -- https://docs.astral.sh/ty/reference/editor-settings/
   ty = {
     settings = {
       ty = {
@@ -25,6 +28,8 @@ local server_configs = {
       },
     },
   },
+
+  -- https://docs.astral.sh/ruff/editors/setup/#neovim
   ruff = {
     init_options = {
       settings = {
@@ -32,6 +37,8 @@ local server_configs = {
       },
     },
   },
+
+  -- https://rust-analyzer.github.io/book/configuration.html
   rust_analyzer = {
     settings = {
       ['rust-analyzer'] = {
