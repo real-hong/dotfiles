@@ -31,7 +31,6 @@ This is my Neovim configurations
 * Motion: [flash.nvim](https://github.com/folke/flash.nvim)
 * Editing Support:
   * nvim-autopairs: [nvim-autopairs](https://github.com/windwp/nvim-autopairs)
-  * nvim-treesitter-context: [nvim-treesitter-context](https://github.com/nvim-treesitter/nvim-treesitter-context)
 * Formatting:
   * Format Runner: [conform.nvim](https://github.com/stevearc/conform.nvim)
 * Colorscheme: [nightfox.nvim](https://github.com/EdenEast/nightfox.nvim)
