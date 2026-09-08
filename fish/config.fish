@@ -9,8 +9,8 @@ fish_add_path "$HOME/go/bin"
 
 alias nv=nvim
 alias cat=bat
-alias ls=exa
-alias ll="exa -lgH"
+alias ls=eza
+alias ll="eza -lgH"
 alias grep="grep -E --color=auto"
 
 alias run-codex="HTTP_PROXY=http://127.0.0.1:10808 HTTPS_PROXY=http://127.0.0.1:10808 codex"

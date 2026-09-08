@@ -21,7 +21,7 @@ My development configurations
 * Python Type Checker and Language Server: [ty](https://docs.astral.sh/ty)
 * Modern Unix
   * grep: [ripgrep](https://github.com/BurntSushi/ripgrep)
-  * ls: [exa](https://github.com/ogham/exa)
+  * ls: [eza](https://github.com/eza-community/eza)
   * ls: [lsd](https://github.com/Peltoche/lsd)
   * cat: [bat](https://github.com/sharkdp/bat)
   * find: [fd](https://github.com/sharkdp/fd)
