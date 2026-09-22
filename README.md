@@ -32,6 +32,6 @@ My development configurations
   * du: [dust](https://github.com/bootandy/dust)
   * du: [gdu](https://github.com/dundee/gdu)
   * df: [duf](https://github.com/muesli/duf)
-  * history: [mcfly](https://github.com/cantino/mcfly)
+  * history: [atuin](https://github.com/atuinsh/atuin)
   * cloc: [scc](https://github.com/boyter/scc)
   * hex viewer: [hexyl](https://github.com/sharkdp/hexyl)
