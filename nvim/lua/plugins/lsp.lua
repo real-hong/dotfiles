@@ -11,19 +11,19 @@ local diagnostic_config = {
 local server_configs = {
   clangd = {},
 
-  -- https://docs.astral.sh/ty/reference/editor-settings/
-  ty = {
+  -- https://pyrefly.org/en/docs/IDE/
+  pyrefly = {
     settings = {
-      ty = {
-        disableLanguageServices = false,
-        diagnosticMode = 'openFilesOnly',
-        showSyntaxErrors = true,
-        inlayHints = {
-          variableTypes = true,
-          callArgumentNames = true,
+      python = {
+        pyrefly = {
+          disableLanguageServices = false,
         },
-        completions = {
-          autoImport = true,
+        analysis = {
+          diagnosticMode = 'openFilesOnly',
+          inlayHints = {
+            variableTypes = true,
+            callArgumentNames = 'all',
+          },
         },
       },
     },
@@ -57,7 +57,7 @@ local server_configs = {
 
 local server_order = {
   'clangd',
-  'ty',
+  'pyrefly',
   'ruff',
   'rust_analyzer',
 }
