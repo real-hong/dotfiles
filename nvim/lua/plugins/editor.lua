@@ -8,6 +8,7 @@ return {
 
   {
     'folke/snacks.nvim',
+    priority = 1000,
     lazy = false,
     ---@type snacks.Config
     opts = {
@@ -195,7 +196,6 @@ return {
 
         -- Toggles
         map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
-        map('n', '<leader>td', gitsigns.toggle_deleted)
         map('n', '<leader>tw', gitsigns.toggle_word_diff)
 
         -- Text object
@@ -220,7 +220,8 @@ return {
       },
       {
         'S',
-        mode = { 'n', 'x', 'o' },
+        -- visual-mode S is left to nvim-surround
+        mode = { 'n', 'o' },
         function()
           require('flash').treesitter()
         end,
@@ -262,6 +263,9 @@ return {
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    opts = {},
+    opts = {
+      -- needs utftex / latex2text, which are not installed
+      latex = { enabled = false },
+    },
   },
 }

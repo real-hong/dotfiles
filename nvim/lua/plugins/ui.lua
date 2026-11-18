@@ -1,7 +1,6 @@
 return {
   {
     'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
       options = {
         icons_enabled = false,
@@ -59,8 +58,13 @@ return {
         mode = 'buffers', -- set to 'tabs' to only show tabpages instead
         themable = true, -- allows highlight groups to be overriden i.e. sets highlights as default
         numbers = 'ordinal',
-        close_command = 'bdelete! %d', -- can be a string | function, see "Mouse actions"
-        right_mouse_command = 'bdelete! %d', -- can be a string | function, see "Mouse actions"
+        -- Snacks.bufdelete asks before dropping unsaved changes and keeps the window layout
+        close_command = function(bufnr)
+          Snacks.bufdelete(bufnr)
+        end,
+        right_mouse_command = function(bufnr)
+          Snacks.bufdelete(bufnr)
+        end,
         left_mouse_command = 'buffer %d', -- can be a string | function, see "Mouse actions"
         middle_mouse_command = nil, -- can be a string | function, see "Mouse actions"
         indicator = {
@@ -78,20 +82,6 @@ return {
         tab_size = 18,
         diagnostics = 'nvim_lsp',
         diagnostics_update_in_insert = false,
-        highlights = {
-          separator = {
-            fg = '#3b4252',
-            bg = '#242b38',
-          },
-          separator_visible = {
-            fg = '#4c566a',
-            bg = '#2b3445',
-          },
-          separator_selected = {
-            fg = '#81a1c1',
-            bg = '#1f2633',
-          },
-        },
         color_icons = false,
         show_buffer_icons = false,
         show_buffer_close_icons = false,
@@ -102,11 +92,6 @@ return {
         separator_style = 'thick',
         enforce_regular_tabs = false,
         always_show_bufferline = true,
-        hover = {
-          enabled = true,
-          delay = 200,
-          reveal = { 'close' },
-        },
       },
     },
   },

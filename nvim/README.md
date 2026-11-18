@@ -55,3 +55,13 @@ This is my Neovim configurations
 | Leader + fg | Live grep                                 |
 | Leader + fb | Search buffer                             |
 | Leader + tb | Blame current line                        |
+| Leader + ti | Toggle inlay hints                        |
+| af / if     | Select function (outer / inner)           |
+| ac / ic     | Select class (outer / inner)              |
+| aa / ia     | Select parameter (outer / inner)          |
+| ]m / [m     | Next / previous function start            |
+| ]M / [M     | Next / previous function end              |
+| ]] / [[     | Next / previous class start               |
+| ][ / []     | Next / previous class end                 |
+| Leader + a  | Swap parameter with next                  |
+| Leader + A  | Swap parameter with previous              |

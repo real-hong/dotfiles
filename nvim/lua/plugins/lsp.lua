@@ -15,13 +15,8 @@ local server_configs = {
   pyrefly = {
     settings = {
       python = {
-        pyrefly = {
-          disableLanguageServices = false,
-        },
         analysis = {
-          diagnosticMode = 'openFilesOnly',
           inlayHints = {
-            variableTypes = true,
             callArgumentNames = 'all',
           },
         },
@@ -72,18 +67,18 @@ local function disable_ruff_hover(args)
   end
 end
 
+local function enable_inlay_hints(args)
+  local client = vim.lsp.get_client_by_id(args.data.client_id)
+  if client and client:supports_method('textDocument/inlayHint', args.buf) then
+    vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+  end
+end
+
 return {
   {
     'neovim/nvim-lspconfig',
-    dependencies = { 'saghen/blink.cmp' },
     config = function()
-      local blink = require('blink.cmp')
-
       vim.diagnostic.config(diagnostic_config)
-
-      vim.lsp.config('*', {
-        capabilities = blink.get_lsp_capabilities(),
-      })
 
       for server, opts in pairs(server_configs) do
         vim.lsp.config(server, opts)
@@ -94,6 +89,16 @@ return {
         callback = disable_ruff_hover,
         desc = 'LSP: Disable hover capability from Ruff',
       })
+
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('lsp_attach_inlay_hints', { clear = true }),
+        callback = enable_inlay_hints,
+        desc = 'LSP: Enable inlay hints',
+      })
+
+      vim.keymap.set('n', '<leader>ti', function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+      end, { desc = 'Toggle inlay hints' })
 
       for _, server in ipairs(server_order) do
         vim.lsp.enable(server)
@@ -114,8 +119,8 @@ return {
     opts = {
       keymap = {
         preset = 'enter',
-        ['<Tab>'] = { 'select_next', 'fallback' },
-        ['<S-Tab>'] = { 'select_prev', 'fallback' },
+        ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+        ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
       },
 
       completion = { documentation = { auto_show = false } },
@@ -195,7 +200,6 @@ return {
 
         sh = { 'shfmt' },
         bash = { 'shfmt' },
-        zsh = { 'shfmt' },
         fish = { 'fish_indent' },
 
         cmake = { 'cmake_format' },

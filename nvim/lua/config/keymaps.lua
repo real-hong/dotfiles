@@ -3,7 +3,9 @@ local map = vim.keymap.set
 -- bufferline
 map('n', '<M-p>', '<CMD>BufferLineCyclePrev<CR>')
 map('n', '<M-n>', '<CMD>BufferLineCycleNext<CR>')
-map('n', '<M-d>', '<CMD>bp|bd #<CR>')
+map('n', '<M-d>', function()
+  Snacks.bufdelete()
+end)
 map('n', '<M-D>', '<CMD>BufferLinePickClose<CR>')
 map('n', '<M-1>', '<CMD>BufferLineGoToBuffer 1<CR>')
 map('n', '<M-2>', '<CMD>BufferLineGoToBuffer 2<CR>')
